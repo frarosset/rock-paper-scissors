@@ -1,0 +1,70 @@
+:root {
+  /* Colors */
+  --black: rgb(0, 0, 0);
+  --white: #f1f1f1;
+  --grey: rgb(171, 171, 171);
+
+  /* Font sizes */
+  --regular-font: 18px;
+  --title-font: 47px;
+
+  /* Font family */
+  --main-font: 'Courier New';
+  --hdr-font: 'Courier New';
+
+  /*Margins and paddings*/
+  --main-margins:  10px;
+
+  /* Maximum column width */
+  --col-width: 500px;
+}
+
+
+html {
+  background-color: var(--black);
+  color:  var(--grey);
+  font-family: var(--main-font), monospace;
+  /*font-size: 100%;*/
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+* { 
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  box-sizing: border-box;
+  padding:  0;
+  margin: 0;
+}
+
+body{
+  margin:  0 auto;
+  height: 100vh; /*it is assumed the same for <html>*/
+  width: 100%; /* or max-width -- this avoids horizontal scroll bars */
+}
+
+/*****************************************************/
+
+body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main,header,footer{
+  max-width: var(--col-width);
+  width: var(--col-width);
+}
+
+h1{
+  color: var(--white);
+  font-family: var(--hdr-font), monospace;
+  margin: var(--main-margins) auto;
+  text-align: center;
+}
+
+main p{
+  margin: var(--main-margins) auto;
+  text-align: center;
+}
