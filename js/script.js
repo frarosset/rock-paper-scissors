@@ -7,10 +7,12 @@
 // This assumes that i+1 wins i (and 0 wins choices.length-1) 
 // (see function roundOutcome)
 // Global variables:
-let choices = ['Rock','Paper','Scissors'];
-let choicesLowerCase = choices.map(itm => itm.toLowerCase());
-let uniqueInitials = choicesLowerCase.map(itm => itm[0]).filter((val, idx, arr)=>
+const choices = ['Rock','Paper','Scissors'];
+const choicesLowerCase = choices.map(itm => itm.toLowerCase());
+const uniqueInitials = choicesLowerCase.map(itm => itm[0]).filter((val, idx, arr)=>
   arr.indexOf(val) === idx).length === choicesLowerCase.length;
+const userName = 'You';
+const computerName = 'Computer';
 
 
 // Get user choice for the user (player)
@@ -26,11 +28,13 @@ function getPlayerChoice(){
 	let descrStr4 = '- If you leave the field empty, a random choice is generated.'
 
 	let userChoiceStr = prompt(descrStr1+descrStr2+descrStr3+descrStr4);
+
 	if (userChoiceStr=='' || userChoiceStr==undefined)
 		return getComputerChoice();
 
 	// trim initial and final white spaces, and convert to lowercase
 	userChoiceStr = userChoiceStr.trim().toLowerCase();
+
 	let checkInitial = uniqueInitials && userChoiceStr.length==1;
 
 	for (let i=0;i<choices.length; i++)
@@ -78,18 +82,101 @@ function playRound(playerSelection, computerSelection) {
 
   switch(outcome){
   	 case 0:
-  	 	return `It's a tie!`;
+  	 	return [`  It's a tie!`,0];
   	 	break;
   	 case 1:
-	 	return `You Won! ${choices[playerSelection]} beats ${choices[computerSelection]}`;
+	 	return [`  You Won! ${choices[playerSelection]} beats ${choices[computerSelection]}`,1];
   	 	break;
   	 case -1: 
-  	 	return `You Lose! ${choices[computerSelection]} beats ${choices[playerSelection]}`;
+  	 	return [`  You Lose! ${choices[computerSelection]} beats ${choices[playerSelection]}`,-1];
   	 	break;
   	 default: 	
   	 	console.error('Invalid outcome');
   }
 }
 
-// Get user choice
-// Output: user choice ID
+function declareWinner(playerScore,computerScore){
+	if (playerScore>computerScore){
+		return `You won this game by ${playerScore} to ${computerScore}`;
+	} else if (playerScore<computerScore){
+		return `You lost this game by ${playerScore} to ${computerScore}`;
+	} else{
+		return `You neither won nor lost this game: it's a tie, ${playerScore} to ${computerScore}!`;
+	}
+}
+
+
+
+// the main game function
+// printFcn could be, e.g., console.log or alert
+// and specifies where the messages are displayed
+function game(printFcn=console.log){
+	const numOfRounds = 5;
+	let playerScore=0;
+	let computerScore=0;
+
+	printFcn(introGameStr().toUpperCase() + '\n' + currentScore(playerScore,computerScore));
+
+	for (let i=0;i<numOfRounds; i++){
+		// Get players'choices
+		const computerSelection = getComputerChoice();
+		let playerSelection;
+
+		do{
+			playerSelection = getPlayerChoice();
+		} while(playerSelection==-1)
+
+		// Declare the outcome of this match
+		let outcome = playRound(playerSelection, computerSelection); 
+
+		// Update score
+		outcome[1]==1 ? playerScore++ : outcome[1]==-1 ? computerScore++ : null;
+
+		// Print the result of this match
+		//printFcn(currentRoundStr(i+1,numOfRounds).toUpperCase());
+		//printFcn(currentChoices(playerSelection,computerSelection));
+		//printFcn(outcome[0]);
+		//printFcn(currentScore(playerScore,computerScore));
+
+		printFcn(currentRoundStr(i+1,numOfRounds).toUpperCase() + '\n' 
+			+ currentChoices(playerSelection,computerSelection) + '\n' 
+			+ outcome[0]+ '\n'
+			+ currentScore(playerScore,computerScore));
+	}
+
+	// Declare final winner
+	printFcn(declareWinner(playerScore,computerScore).toUpperCase());
+
+	// This next message is always shown on the console
+	console.log(descrStartConsoleGameStr());
+}
+
+
+
+
+/* Some functions to display text */
+function descrStartConsoleGameStr(){
+	return `Type 'game()' or 'game(alert)' in the browser console to start a new game\n(with the alert argument, output messages are displayed in an alert box instead of the console)`;
+}
+
+function introGameStr(){
+	//return 'Welcome to ' + choices.map(itm=>itm) + ' game!';
+	return `Welcome to ${choices.map(itm=>itm)} game!`;
+}
+
+function currentScore(playerScore,computerScore){
+	return `${userName}: ${playerScore} vs ${computerName}: ${computerScore}`;
+}
+
+function currentRoundStr(currentRound,numOfRounds){
+	return `Round ${currentRound}/${numOfRounds}`;
+}
+
+function currentChoices(playerSelection,computerSelection){
+	return `  ${userName} choses ${choices[playerSelection]}, ${computerName} choses ${choices[computerSelection]}`;
+}
+
+
+/*This is displayed on the console once the script is loaded, 
+  to tell the user how to start a new game from the console*/
+console.log(descrStartConsoleGameStr());
