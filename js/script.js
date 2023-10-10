@@ -25,7 +25,7 @@ function getPlayerChoice(){
 	let descrStr1 = 'Make your choice: ' + choices + '\n';
 	let descrStr2 = '- The typed string is case-insensitive;\n'
 	let descrStr3 = uniqueInitials?'- You can optionally type only the first letter;\n':'';
-	let descrStr4 = '- If you leave the field empty, a random choice is generated.'
+	let descrStr4 = '- If you leave the field empty, a random choice is generated.';
 
 	let userChoiceStr = prompt(descrStr1+descrStr2+descrStr3+descrStr4);
 
@@ -55,7 +55,7 @@ function getComputerChoice(){
 	return Math.floor(Math.random() * choices.length);
 }
 
-// Determine the ourcome of a round
+// Determine the outcome of a round
 // This assumes that i+1 wins i (and 0 wins choices.length-1)
 // Input: player and computer choices IDs
 // Output: 1 if the user wins, 0: if it is a tie, -1: if the user loses
@@ -115,7 +115,7 @@ function game(printFcn=console.log){
 	let playerScore=0;
 	let computerScore=0;
 
-	printFcn(introGameStr().toUpperCase() + '\n' + currentScore(playerScore,computerScore));
+	printFcn(introGameStr().toUpperCase() + '\n' + currentScore(playerScore,computerScore) + '\n');
 
 	for (let i=0;i<numOfRounds; i++){
 		// Get players'choices
@@ -141,7 +141,7 @@ function game(printFcn=console.log){
 		printFcn(currentRoundStr(i+1,numOfRounds).toUpperCase() + '\n' 
 			+ currentChoices(playerSelection,computerSelection) + '\n' 
 			+ outcome[0]+ '\n'
-			+ currentScore(playerScore,computerScore));
+			+ currentScore(playerScore,computerScore) + '\n');
 	}
 
 	// Declare final winner
@@ -160,7 +160,6 @@ function descrStartConsoleGameStr(){
 }
 
 function introGameStr(){
-	//return 'Welcome to ' + choices.map(itm=>itm) + ' game!';
 	return `Welcome to ${choices.map(itm=>itm)} game!`;
 }
 
@@ -173,7 +172,7 @@ function currentRoundStr(currentRound,numOfRounds){
 }
 
 function currentChoices(playerSelection,computerSelection){
-	return `  ${userName} choses ${choices[playerSelection]}, ${computerName} choses ${choices[computerSelection]}`;
+	return `  ${userName} chose${userName.toLowerCase()=='you'?'':'s'} ${choices[playerSelection]}, ${computerName} choses ${choices[computerSelection]}`;
 }
 
 
@@ -187,13 +186,30 @@ console.log(descrStartConsoleGameStr());
 /* jQuery terminal interface 
 	 (see https://itnext.io/how-to-create-interactive-terminal-like-website-888bb0972288) */
 
+/* Define the commands that can be typed on the console*/
+let commands = {
+	game: function(){
+		game(termPrint);
+		this.echo('\n' + descrStartTerminalGameStr() + '\n');
+	},
+}
+
+let term;
+
 $(function() {
-    $('#terminal-div').terminal({
-        hello: function(what) {
-            this.echo('Hello, ' + what +
-                      '. Wellcome to this terminal.');
-        }
-    }, {
-        greetings: 'My First Web Terminal'
+    term = $('#terminal-div').terminal(commands, {
+        greetings: descrStartTerminalGameStr()+'\n'
     });
 });
+
+function descrStartTerminalGameStr(){
+	return `Type 'game' to start a new game`;
+}
+
+function termPrint(str){
+	alert(str);
+	/*TOFIX: these echo are displayed only after the caller function (game(termPRint)) is completed*/
+	term.echo(str,{flush: true});
+	term.flush();
+}
+
