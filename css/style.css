@@ -14,6 +14,9 @@
 
   /*Margins and paddings*/
   --main-margins:  10px;
+  --main-padding: 10px;
+  --hdr-margins:  20px;
+  --hdr-padding: 10px;
 
   /* Maximum column width */
   --col-width: 500px;
@@ -54,17 +57,19 @@ body{
 
 main,header,footer{
   max-width: var(--col-width);
-  width: var(--col-width);
+  width: 100%;
 }
 
 h1{
   color: var(--white);
   font-family: var(--hdr-font), monospace;
-  margin: var(--main-margins) auto;
+  margin: var(--hdr-margins) auto;
+  padding: 0 var(--hdr-padding);
   text-align: center;
 }
 
 main p{
   margin: var(--main-margins) auto;
+  padding: 0 var(--main-padding);
   text-align: center;
 }
