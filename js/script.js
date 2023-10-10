@@ -192,7 +192,22 @@ let commands = {
 		game(termPrint);
 		this.echo('\n' + descrStartTerminalGameStr() + '\n');
 	},
+
+	// https://terminal.jcubic.pl/examples.php
+	// https://github.com/jcubic/jquery.terminal/wiki/Getting-Started#reading-text-from-user
+	//foo: async function() {
+  //      this.echo('.');
+  //      await sleep(1000);
+  //     this.echo('.');
+  //      await sleep(1000);
+  //      this.echo('.');
+  //  }
 }
+
+//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+//function sleep(ms) {
+//  return new Promise(resolve => setTimeout(resolve, ms));
+//}
 
 let term;
 
@@ -203,7 +218,7 @@ $(function() {
 });
 
 function descrStartTerminalGameStr(){
-	return `Type 'game' to start a new game`;
+	return colorText(`Type 'game' to start a new game`,'gi','MintCream');
 }
 
 function termPrint(str){
@@ -213,3 +228,13 @@ function termPrint(str){
 	term.flush();
 }
 
+/* color the output in the terminal */
+function colorText(txt,format,txtColor,highlighColor='black'){
+    // format: 
+    // - g (glow)
+    // - b (bold)
+    // - i (italic)
+    // - u (underlined)
+    
+    return "[[" + format + ";" + txtColor + ";" + highlighColor + "]" + txt + "]";
+}
