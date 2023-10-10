@@ -4,15 +4,30 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Rock, Scissors, Paper</title>
-	<link rel="stylesheet" href="./css/style.css">
-	<script src="./js/script.js"></script>
+	<!-- Code to emulate an interactive terminal -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css"/>
+  <!-- Custom stylesheet and script -->
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/script.js"></script>
 </head>
 <body>
   <header>
     <h1>Rock Paper Scissors</h1>
-    <main>
-    	<p>To play this game, go to the browser console and call <u>game()</u> to get output messages displayed in the console, or <u>game(alert)</u>, to get them displayed in an alert box, instead.</p>
-    </main>
   </header>
+  <main>
+  	<!--Terminal interface using jQuery Terminal
+  			(see https://itnext.io/how-to-create-interactive-terminal-like-website-888bb0972288) -->
+		<div id="terminal-wrapper">
+    	<div id='terminal-div'>
+      </div>
+    </div>
+  </main>
+  <footer>
+		<p id='alternative'>Alternatively, you can play this game in the browser console, by calling <u>game()</u> to get output messages displayed in the console, or <u>game(alert)</u>, to get them displayed in an alert box, instead.</p>
+
+		<p id='cite'>Terminal interface built with <a href='https://terminal.jcubic.pl/'>jQuery Terminal</a></p>
+  </footer>
 </body>
 </html>

@@ -180,3 +180,20 @@ function currentChoices(playerSelection,computerSelection){
 /*This is displayed on the console once the script is loaded, 
   to tell the user how to start a new game from the console*/
 console.log(descrStartConsoleGameStr());
+
+
+/**********************************************/
+
+/* jQuery terminal interface 
+	 (see https://itnext.io/how-to-create-interactive-terminal-like-website-888bb0972288) */
+
+$(function() {
+    $('#terminal-div').terminal({
+        hello: function(what) {
+            this.echo('Hello, ' + what +
+                      '. Wellcome to this terminal.');
+        }
+    }, {
+        greetings: 'My First Web Terminal'
+    });
+});
