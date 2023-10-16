@@ -101,7 +101,6 @@ footer{
   font-size: var(--cite-fontsize);
 }
 
-
 /* Delimit the terminal with lines */
 main{
   border-top:  1px solid var(--grey);
@@ -145,7 +144,6 @@ main{
 .terminal{
   width: 100%;
 }
-
 
 .terminal{
     --size: 1.2;
