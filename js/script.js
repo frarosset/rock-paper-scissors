@@ -15,7 +15,6 @@ const winCode = 1;
 const loseCode = -1;
 const tieCode = 0;
 
-
 // Get user choice ID for the user (player)
 // The user can type in a prompt the full name of the choice 
 // or just the first letter (if these are unique)
@@ -154,3 +153,30 @@ function currentChoices(playerSelection,computerSelection){
 
 // Initially show on the console how to start a new game
 console.log(descrStartConsoleGameStr());
+
+
+/* ************************************************************** */
+
+let playerMoveDiv = document.querySelector('#playerMove');
+let playerNameDiv = document.querySelector('#playerName');
+let playerScoreDiv = document.querySelector('#playerScore');
+let computerMoveDiv = document.querySelector('#computerMove');
+let computerNameDiv = document.querySelector('#computerName');
+let computerScoreDiv = document.querySelector('#computerScore');
+let playerChoiceListDiv = document.querySelector('#playerChoiceList');
+
+
+/*Initialization*/
+playerNameDiv.textContent = userName;
+computerNameDiv.textContent = computerName;
+playerScoreDiv.textContent = 0;
+computerScoreDiv.textContent = 0;
+
+let playerChoiceBtn = [];
+for (let i=0;i<choices.length;i++){
+	playerChoiceBtn[i] = document.createElement('button');
+	playerChoiceBtn[i].type = 'button';
+	playerChoiceBtn[i].classList.add('choicesBtn',choicesLowerCase[i]);
+	playerChoiceBtn[i].textContent = choices[i];
+	playerChoiceListDiv.appendChild(playerChoiceBtn[i]);	
+}

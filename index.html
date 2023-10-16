@@ -5,18 +5,47 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Rock, Scissors, Paper</title>
 	<link rel="stylesheet" href="./css/style.css">
-	<script src="./js/script.js"></script>
+	<script src="./js/script.js" defer></script>
 </head>
 <body>
   <header>
     <h1>Rock Paper Scissors</h1>
   </header>  
   <main>
-    <p>To play this game, go to the browser console and call <u>game()</u> to get output messages displayed in the console, or <u>game(alert)</u>, to get them displayed in an alert box, instead.</p>
+    <div id="gameInfo">
+      <p>Welcome to Rock Paper Scissors game!</p>
+      <button class="newGameButton" type="button">Start a new game!</button>
+    </div>
+    <div id="playerChoiceInfo">
+      <p>Make your choice!</p>
+      <div id="playerChoiceList">
+      </div>
+    </div>
+    <div id="roundOutcome">
+      <p>roundOutcomePlaceholder</p>
+      <button class="newRoundButton" type="button">Next round!</button>
+    </div>
+    <div id="playersInfo">
+      <div id="playerInfo">
+        <div id="playerMove">movePlaceholder</div>
+        <div id="playerName"></div>
+        <div id="playerScore"></div>
+      </div>
+      <div id="computerInfo">
+        <div id="computerMove">movePlaceholder</div>
+        <div id="computerName"></div>
+        <div id="computerScore"></div>
+      </div>
+    </div>
+    <div id="gameOutcome">  
+      <p>gameOutcomePlaceholder</p>
+      <button class="newGameButton" type="button">Start a new game!</button>
+    </div>
+
   </main>
   <footer>
   	 <div class='alt'>
-			<p class='alternative'>An updated version with a graphical interface will be available soon!</p>
+			<p class='alternative'></p>
          <p class='cite'></p>
     </div>
   </footer>

@@ -23,7 +23,7 @@
   --alt-gap:  10px;
 
   /* Maximum column width */
-  --col-width: 500px;
+  --col-width: 800px;
 }
 
 
@@ -115,4 +115,45 @@ main{
   flex: 1;
   height: 100%;
   padding: var(--main-padding);
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#playerChoiceInfo
+{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#gameInfo,
+#roundOutcome,
+#gameOutcome{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#playersInfo,
+#playerChoiceList{
+  display: flex;
+  gap: var(--main-padding);
+}
+
+#playerInfo,
+#computerInfo,
+.choicesBtn{
+  flex:1;
+}
+
+#playerMove,
+#playerName,
+#playerScore,
+#computerMove,
+#computerName,
+#computerScore{
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
