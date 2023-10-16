@@ -1,38 +1,38 @@
-// This implementations works using integer choices (IDs).
-// The corresponding textual description are stored in
-// the global choices array.
-// In particular, the integer assigned to a choice, is the
-// index in the choices array, where the corresponding string
-// is located. 
+// The possible choices string descriptions are in the global choices array.
+// This implementations works using an integer ID to represent each choice,
+// which is indeed the corresponding index in the choice array.
 // This assumes that i+1 wins i (and 0 wins choices.length-1) 
 // (see function roundOutcome)
-// Global variables:
 const choices = ['Rock','Paper','Scissors'];
 const choicesLowerCase = choices.map(itm => itm.toLowerCase());
-const uniqueInitials = choicesLowerCase.map(itm => itm[0]).filter((val, idx, arr)=>
-  arr.indexOf(val) === idx).length === choicesLowerCase.length;
+const choicesLowerCaseInitials = choicesLowerCase.map(itm => itm[0]);
+const uniqueInitials = choicesLowerCaseInitials.filter((val,idx,arr)=>
+  arr.indexOf(val) === idx).length === choicesLowerCaseInitials.length;
 const userName = 'You';
 const computerName = 'Computer';
+// These codes specify if a match is won or lost by the user, or if it is a tie
+const winCode = 1;
+const loseCode = -1;
+const tieCode = 0;
 
 
-// Get user choice for the user (player)
-// A prompt is used
-// The user can type the full name of the choice or just the first letter (if these are unique)
+// Get user choice ID for the user (player)
+// The user can type in a prompt the full name of the choice 
+// or just the first letter (if these are unique)
 // The choice is case-insensitive
-// If the input field is left empty (undefined value), a random value is generated
-// Output: the ID of the choice (-1 if the choice is invalid)
+// If the input field is left empty ('' or undefined), a random ID is generated
+// Return -1 if the choice is invalid (no string match)
 function getPlayerChoice(){
 	let descrStr1 = 'Make your choice: ' + choices + '\n';
 	let descrStr2 = '- The typed string is case-insensitive;\n'
 	let descrStr3 = uniqueInitials?'- You can optionally type only the first letter;\n':'';
-	let descrStr4 = '- If you leave the field empty, a random choice is generated.'
+	let descrStr4 = '- If you leave the field empty, a random choice is generated.';
 
 	let userChoiceStr = prompt(descrStr1+descrStr2+descrStr3+descrStr4);
 
 	if (userChoiceStr=='' || userChoiceStr==undefined)
 		return getComputerChoice();
 
-	// trim initial and final white spaces, and convert to lowercase
 	userChoiceStr = userChoiceStr.trim().toLowerCase();
 
 	let checkInitial = uniqueInitials && userChoiceStr.length==1;
@@ -40,58 +40,52 @@ function getPlayerChoice(){
 	for (let i=0;i<choices.length; i++)
 	{
 		if (userChoiceStr === choicesLowerCase[i] ||
-		(checkInitial && (userChoiceStr===choicesLowerCase[i][0])))
+		(checkInitial && (userChoiceStr===choicesLowerCaseInitials[i])))
 			return i;
 	}
 
-	/* Return -1 if no string match */
 	return -1;
 }
 
 
-// Create a random choice for the opponent (computer)
-// Output: the ID of the choice
+// Create a random choice ID for the opponent (computer)
 function getComputerChoice(){
 	return Math.floor(Math.random() * choices.length);
 }
 
-// Determine the ourcome of a round
+// Determine the outcome of a round, given the player and computer choices IDs
 // This assumes that i+1 wins i (and 0 wins choices.length-1)
-// Input: player and computer choices IDs
-// Output: 1 if the user wins, 0: if it is a tie, -1: if the user loses
 function roundOutcome(playerSelection, computerSelection) {
   if (playerSelection===computerSelection)
-  	// same choice: it's a tie
-  	return 0;
+  	return tieCode;
   else if (((computerSelection+1)%choices.length) === playerSelection)
-  	// the user wins, as playerSelection>computerSelection
+  	// The user wins, as playerSelection>computerSelection
   	// Note that playerSelection+1===computerSelection is tested, instead.
   	// (computerSelection+1)%choices.length) is used to wrap around playerSelection+1
-  	// when playerSelection= choices.length-1
-  	return 1;
+  	// when playerSelection = choices.length-1
+  	return winCode;
   else
-  	return -1;
+  	return loseCode;
   
 }
 
-// Plays a round
-// Input: player and computer choices IDs
-// Output: the outcome of a round, as a string
+// Play a round, given the player and computer choices IDs, and return
+// its outcome as an array with a string description and a code
 function playRound(playerSelection, computerSelection) {
   let outcome = roundOutcome(playerSelection, computerSelection);
 
   switch(outcome){
-  	 case 0:
-  	 	return [`  It's a tie!`,0];
+  	 case tieCode:
+  	 	return [`  It's a tie!`,outcome];
   	 	break;
-  	 case 1:
-	 	return [`  You Won! ${choices[playerSelection]} beats ${choices[computerSelection]}`,1];
+  	 case winCode:
+	 	return [`  You Win! ${choices[playerSelection]} beats ${choices[computerSelection]}`,outcome];
   	 	break;
-  	 case -1: 
-  	 	return [`  You Lose! ${choices[computerSelection]} beats ${choices[playerSelection]}`,-1];
+  	 case loseCode: 
+  	 	return [`  You Lose! ${choices[computerSelection]} beats ${choices[playerSelection]}`,outcome];
   	 	break;
   	 default: 	
-  	 	console.error('Invalid outcome');
+  	 	console.error(`Invalid outcome`);
   }
 }
 
@@ -105,20 +99,16 @@ function declareWinner(playerScore,computerScore){
 	}
 }
 
-
-
-// the main game function
-// printFcn could be, e.g., console.log or alert
-// and specifies where the messages are displayed
+// The main game function, where printFcn could be, e.g., console.log 
+// or alert and specifies where the messages are displayed
 function game(printFcn=console.log){
 	const numOfRounds = 5;
 	let playerScore=0;
 	let computerScore=0;
 
-	printFcn(introGameStr().toUpperCase() + '\n' + currentScore(playerScore,computerScore));
+	printFcn(introGameStr().toUpperCase() + '\n' + currentScore(playerScore,computerScore) + '\n');
 
 	for (let i=0;i<numOfRounds; i++){
-		// Get players'choices
 		const computerSelection = getComputerChoice();
 		let playerSelection;
 
@@ -126,41 +116,27 @@ function game(printFcn=console.log){
 			playerSelection = getPlayerChoice();
 		} while(playerSelection==-1)
 
-		// Declare the outcome of this match
 		let outcome = playRound(playerSelection, computerSelection); 
-
-		// Update score
-		outcome[1]==1 ? playerScore++ : outcome[1]==-1 ? computerScore++ : null;
-
-		// Print the result of this match
-		//printFcn(currentRoundStr(i+1,numOfRounds).toUpperCase());
-		//printFcn(currentChoices(playerSelection,computerSelection));
-		//printFcn(outcome[0]);
-		//printFcn(currentScore(playerScore,computerScore));
+      // outcome is an array: [stringDescription,associatedCode]
+		outcome[1]==winCode ? playerScore++ : outcome[1]==loseCode ? computerScore++ : null;
 
 		printFcn(currentRoundStr(i+1,numOfRounds).toUpperCase() + '\n' 
 			+ currentChoices(playerSelection,computerSelection) + '\n' 
 			+ outcome[0]+ '\n'
-			+ currentScore(playerScore,computerScore));
+			+ currentScore(playerScore,computerScore) + '\n');
 	}
 
-	// Declare final winner
 	printFcn(declareWinner(playerScore,computerScore).toUpperCase());
 
-	// This next message is always shown on the console
+	// Shown on the console how to start a new game
 	console.log(descrStartConsoleGameStr());
 }
 
-
-
-
-/* Some functions to display text */
 function descrStartConsoleGameStr(){
 	return `Type 'game()' or 'game(alert)' in the browser console to start a new game\n(with the alert argument, output messages are displayed in an alert box instead of the console)`;
 }
 
 function introGameStr(){
-	//return 'Welcome to ' + choices.map(itm=>itm) + ' game!';
 	return `Welcome to ${choices.map(itm=>itm)} game!`;
 }
 
@@ -173,10 +149,8 @@ function currentRoundStr(currentRound,numOfRounds){
 }
 
 function currentChoices(playerSelection,computerSelection){
-	return `  ${userName} choses ${choices[playerSelection]}, ${computerName} choses ${choices[computerSelection]}`;
+	return `  ${userName} chose${userName.toLowerCase()=='you'?'':'s'} ${choices[playerSelection]}, ${computerName} choses ${choices[computerSelection]}`;
 }
 
-
-/*This is displayed on the console once the script is loaded, 
-  to tell the user how to start a new game from the console*/
+// Initially show on the console how to start a new game
 console.log(descrStartConsoleGameStr());
