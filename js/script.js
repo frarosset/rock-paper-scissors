@@ -22,6 +22,7 @@ let playerChoiceInfoDiv = document.querySelector('#playerChoiceInfo');
 let roundOutcomeDiv = document.querySelector('#roundOutcome');
 let playersInfoDiv = document.querySelector('#playersInfo');
 let gameOutcomeDiv = document.querySelector('#gameOutcome');
+let newGameDiv = document.querySelector('#newGame');
 let playerMoveDiv = document.querySelector('#playerMove');
 let playerNameDiv = document.querySelector('#playerName');
 let playerScoreDiv = document.querySelector('#playerScore');
@@ -29,7 +30,7 @@ let computerMoveDiv = document.querySelector('#computerMove');
 let computerNameDiv = document.querySelector('#computerName');
 let computerScoreDiv = document.querySelector('#computerScore');
 let playerChoiceListDiv = document.querySelector('#playerChoiceList');
-let newGameBtn = document.querySelectorAll('.newGameBtn');
+let newGameBtn = document.querySelector('#newGameBtn');
 let newRoundBtn = document.querySelector('#newRoundBtn');
 let roundOutcomeP = document.querySelector('#roundOutcome>p');
 let gameOutcomeP = document.querySelector('#gameOutcome>p');
@@ -46,6 +47,11 @@ for (let i=0;i<choices.length;i++){
 	disableButton(playerChoiceBtn[i]);
 	playerChoiceListDiv.appendChild(playerChoiceBtn[i]);
 }
+
+removeElement(playerChoiceInfoDiv);
+removeElement(roundOutcomeDiv);
+removeElement(playersInfoDiv);
+removeElement(gameOutcomeDiv);
 
 /* ************************************************************** */
 
@@ -102,9 +108,24 @@ function enableArrayOfButtons(arr){
 	arr.forEach(btn => {enableButton(btn);});
 };
 
+function removeElement(elem){
+	elem.classList.add('removed');
+};
+
+function hideElement(elem){
+	elem.classList.add('hidden');
+};
+
+function showElement(elem){
+	elem.classList.remove('removed','hidden');
+};
+
+
 /* Buttons callbacks -------------------------------------------- */
 function playRound(playerSelection){
 	disableArrayOfButtons(playerChoiceBtn);
+	removeElement(playerChoiceInfoDiv);
+	showElement(roundOutcomeDiv);
 
 	const computerSelection = getComputerChoice();
 
@@ -127,7 +148,10 @@ function playRound(playerSelection){
 	let gameOutcome = declareWinner();
 	if(gameOutcome[0]){ // there is a winner for the game
 		gameOutcomeP.textContent = gameOutcome[1];
-		enableArrayOfButtons(newGameBtn);
+		enableButton(newGameBtn);
+		showElement(gameOutcomeDiv);
+		showElement(newGameDiv);
+		hideElement(newRoundBtn);	
 	}
 	else{
 		enableButton(newRoundBtn);
@@ -136,22 +160,32 @@ function playRound(playerSelection){
 
 function startNewRound(){
 	disableButton(newRoundBtn);
+	showElement(playerChoiceInfoDiv);
+	removeElement(roundOutcomeDiv);
 	enableArrayOfButtons(playerChoiceBtn);
 }
 
 function startNewGame(){
-	disableArrayOfButtons(newGameBtn);
+	disableButton(newGameBtn);
+	removeElement(gameOutcomeDiv);
+	removeElement(roundOutcomeDiv);
+	removeElement(gameInfoDiv);
+	removeElement(newGameDiv);
+	showElement(playerChoiceInfoDiv);
+	showElement(playersInfoDiv);
+	showElement(newRoundBtn);	
+	
 	playerScore=0;
 	computerScore=0;
 	playerScoreDiv.textContent = playerScore;
 	computerScoreDiv.textContent = computerScore;
 
+
+
 	enableArrayOfButtons(playerChoiceBtn);
 };
 
-/* Init code */
 
-
-newGameBtn.forEach(btn => {btn.addEventListener('click',startNewGame)});
+newGameBtn.addEventListener('click',startNewGame);
 playerChoiceBtn.forEach((btn,idx) => {btn.addEventListener('click',(event)=>{playRound(event.currentTarget.playerChoice)});});
 newRoundBtn.addEventListener('click',startNewRound);

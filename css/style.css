@@ -120,7 +120,8 @@ main{
   justify-content: space-around;
 }
 
-#playerChoiceInfo
+#playerChoiceInfo,
+#roundOutcome
 {
   display: flex;
   flex-direction: column;
@@ -128,8 +129,8 @@ main{
 }
 
 #gameInfo,
-#roundOutcome,
-#gameOutcome{
+#gameOutcome,
+#newGame{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -156,4 +157,12 @@ main{
   display:flex;
   align-items: center;
   justify-content: center;
+}
+
+.removed{
+  display:none !important;
+}
+
+.hidden{
+  visibility:hidden !important;
 }
