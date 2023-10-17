@@ -3,6 +3,9 @@
   --black: rgb(0, 0, 0);
   --white: #f1f1f1;
   --grey: rgb(171, 171, 171);
+  --col10: #F55555;
+  --col70: #6A6FFD;
+  --col30 :#40B1F8;
 
   /* Font sizes */
   --alt-fontsize: 11px;
@@ -21,6 +24,11 @@
   --hdr-gap:  20px;
   --ftr-gap:  20px;
   --alt-gap:  10px;
+
+  /*Buttons*/
+  --btn-padding: 20px;
+  --btn-border: 2px;
+  --btn-height: 100px;
 
   /* Maximum column width */
   --col-width: 800px;
@@ -176,4 +184,36 @@ main{
 #computerMoveImg{
   /*This mirror the image for the computer choice on the y-axis */
   transform: scale(-1, 1);
+}
+
+button{
+  border-radius: 7px;
+}
+
+#newRoundBtn,
+#newGameBtn{
+  height: calc(1em + 2*(var(--btn-padding)+var(--btn-border)));
+  margin: calc(var(--btn-height)/2 - 0.5em - var(--btn-padding) - var(--btn-border)) auto;
+  padding: var(--btn-padding);
+
+  border: var(--btn-border) solid var(--col70);
+  color: var(--col70);
+  background-color: none;
+}
+
+.choicesBtn{
+  background-color: #F55555;
+  border: var(--btn-border) solid var(--white);
+  /*width:calc(min(200px,100%))!important;*/
+  flex: 1 1 0;
+  height: var(--btn-height) !important;
+}
+
+.choicesBtnImg>.lottie-svg-class{
+  width:calc(min(60px, 100%))!important;
+}
+
+.choicesBtnImg{
+  transform: rotate(-30deg);
+  overflow: hidden;
 }

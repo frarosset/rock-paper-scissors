@@ -41,12 +41,19 @@ let computerMoveP = document.querySelector('#computerMove>p');
 playerNameDiv.textContent = playerName;
 computerNameDiv.textContent = computerName;
 let playerChoiceBtn = [];
+let playerChoiceBtnP = [];
+let playerChoiceBtnImg = [];
 for (let i=0;i<choices.length;i++){
 	playerChoiceBtn[i] = document.createElement('button');
 	playerChoiceBtn[i].type = 'button';
 	playerChoiceBtn[i].classList.add('choicesBtn',choicesLowerCase[i]);
 	playerChoiceBtn[i].playerChoice = i;
-	playerChoiceBtn[i].textContent = choices[i];
+	playerChoiceBtnImg[i] = document.createElement('div'); /*for Lottie animation*/
+	playerChoiceBtnP[i]   = document.createElement('p');
+	playerChoiceBtnP[i].textContent = choices[i];
+	playerChoiceBtnImg[i].classList.add('choicesBtnImg',choicesLowerCase[i]);
+	playerChoiceBtn[i].appendChild(playerChoiceBtnImg[i]);
+	playerChoiceBtn[i].appendChild(playerChoiceBtnP[i]);
 	disableButton(playerChoiceBtn[i]);
 	playerChoiceListDiv.appendChild(playerChoiceBtn[i]);
 }
@@ -173,6 +180,7 @@ async function playRound(playerSelection){
 	if(gameOutcome[0]){ // there is a winner for the game
 		gameOutcomeP.textContent = gameOutcome[1];
 		showElement(gameOutcomeDiv);
+		removeElement(newRoundDiv);
 		showElement(newGameDiv);
 		enableButton(newGameBtn);
 	}
@@ -191,6 +199,12 @@ function startNewRound(){
 	showElement(playerChoiceInfoDiv);	
 	waitingAnimation(playerMoveImgLottie);
 	waitingAnimation(computerMoveImgLottie);
+
+	playerChoiceBtnImgLottie.forEach((itm,idx) => {
+		moveAnimation(itm,segmentBeforeMove,segmentMove[idx],segmentIdle[idx]);
+		reduceAnimationSpeedAfterWaiting(itm,waitingMoveInMs);
+	});
+
 	enableArrayOfButtons(playerChoiceBtn);	
 }
 
@@ -198,31 +212,30 @@ function startNewGame(){
 	disableButton(newGameBtn);
 	removeElement(gameInfoDiv);
 	removeElement(newGameDiv);
-	removeElement(newRoundDiv);
-	removeElement(gameOutcomeDiv);
-	hideElement(roundOutcomeDiv);
-	hideElement(playerMoveP);
-	hideElement(computerMoveP);
+	hideElement(gameOutcomeDiv);
 
 	playerScore=0;
 	computerScore=0;
 	playerScoreDiv.textContent = playerScore;
 	computerScoreDiv.textContent = computerScore;
-
-	showElement(playerChoiceInfoDiv);
 	showElement(playersInfoDiv);
 
-
-
-	waitingAnimation(playerMoveImgLottie);
-	waitingAnimation(computerMoveImgLottie);
-	enableArrayOfButtons(playerChoiceBtn);
+	startNewRound();
 };
 
 
 newGameBtn.addEventListener('click',startNewGame);
-playerChoiceBtn.forEach((btn,idx) => {btn.addEventListener('click',(event)=>{playRound(event.currentTarget.playerChoice)});});
+playerChoiceBtn.forEach((btn) => {btn.addEventListener('click',(event)=>{
+	playRound(event.currentTarget.playerChoice)});
+});
 newRoundBtn.addEventListener('click',startNewRound);
+playerChoiceBtn.forEach((btn) => {btn.addEventListener('mouseenter',(event)=>{
+	let idx = event.currentTarget.playerChoice;
+	let itm = playerChoiceBtnImgLottie[idx];
+	moveAnimation(itm,segmentBeforeMove,segmentMove[idx],segmentIdle[idx]);
+	reduceAnimationSpeedAfterWaiting(itm,waitingMoveInMs);
+})});
+
 
 /* Animated images (Lottie format) ------------------------------ */
 // https://css-tricks.com/animating-with-lottie/
@@ -232,6 +245,10 @@ newRoundBtn.addEventListener('click',startNewRound);
 let lottieData = (element) => ({
 	container: element,
 	renderer: 'svg',
+	rendererSettings: {
+		preserveAspectRatio: 'xMidYMid meet',
+		className: "lottie-svg-class"
+	},
 	loop: false,
 	autoplay: false,
 	path: 'https://lottie.host/a5e54894-3981-4e58-9658-37b29d13d6ee/RFy1A9AhQP.json'
@@ -253,10 +270,13 @@ let computerMoveImg = document.querySelector('#computerMoveImg');
 let playerMoveImgLottie = bodymovin.loadAnimation(lottieData(playerMoveImg));
 let computerMoveImgLottie = bodymovin.loadAnimation(lottieData(computerMoveImg));
 
+let playerChoiceBtnImgLottie = playerChoiceBtnImg.map(itm =>
+	bodymovin.loadAnimation(lottieData(itm)));
+
 function waitingAnimation(animation){
 	animation.setSpeed(1.2);
-	animation.loop = true;
 	animation.playSegments(segmentWait, true);
+	animation.loop = true;
 }
 
 // helper function to set a waiting time before executing the next line of code
