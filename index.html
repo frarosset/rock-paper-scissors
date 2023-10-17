@@ -5,7 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Rock, Scissors, Paper</title>
 	<link rel="stylesheet" href="./css/style.css">
-	<script src="./js/script.js" defer></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" defer></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" defer></script> 
+  <script src="./js/script.js" defer></script>
 </head>
 <body>
   <header>
@@ -20,24 +22,33 @@
       <div id="playerChoiceList">
       </div>
     </div>
-    <div id="roundOutcome">
-      <p>roundOutcomePlaceholder</p>
+    <div id="newRound">
+      <p class="hidden">placeholder</p>
       <button id="newRoundBtn" type="button" disabled>Next round!</button>
+    </div>    
+    <div id="roundOutcome">
+      <p>placeholder</p>
     </div>
     <div id="playersInfo">
       <div id="playerInfo">
-        <div id="playerMove">-</div>
+        <div id="playerMove">
+          <div id="playerMoveImg"></div>
+          <p>-</p>
+        </div>
         <div id="playerName"></div>
         <div id="playerScore"></div>
       </div>
       <div id="computerInfo">
-        <div id="computerMove">-</div>
+        <div id="computerMove">
+          <div id="computerMoveImg"></div>
+          <p>-</p>
+        </div>
         <div id="computerName"></div>
         <div id="computerScore"></div>
       </div>
     </div>
     <div id="gameOutcome">  
-      <p>gameOutcomePlaceholder</p>
+      <p>placeholder</p>
     </div>
     <div id="newGame">
       <button id="newGameBtn" type="button">Start a new game!</button>

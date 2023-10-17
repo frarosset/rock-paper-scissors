@@ -121,7 +121,8 @@ main{
 }
 
 #playerChoiceInfo,
-#roundOutcome
+#roundOutcome,
+#newRound
 {
   display: flex;
   flex-direction: column;
@@ -159,10 +160,20 @@ main{
   justify-content: center;
 }
 
+#playerMove,
+#computerMove{
+  flex-direction: column;
+}
+
 .removed{
   display:none !important;
 }
 
 .hidden{
   visibility:hidden !important;
+}
+
+#computerMoveImg{
+  /*This mirror the image for the computer choice on the y-axis */
+  transform: scale(-1, 1);
 }
