@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&family=Montserrat&display=swap');
 
 :root {
   /* Colors */
@@ -9,28 +9,27 @@
   --col10: #F55555;
   --col70: #6A6FFD;
   --col30 :#40B1F8;
+  --light-grey: rgb(210, 210, 210);
 
-  /* Font sizes */
-  --alt-fontsize: 11px;
-  --cite-fontsize: 16px; 
-                               
+  /* Font sizes */                               
   --hdr-fontsize: 36px;
   --btn-fontsize: 28px;
   --txt-fontsize: 22px;
   --score-fontsize: 58px;
   --name-fontsize: 30px;
   --move-fontsize: 22px;
+  --ftr-fontsize: 12px;
 
   /* Font family */
   --main-font: 'Patrick Hand SC', sans-serif;
+  --ftr-font: 'Montserrat';
 
   /*Margins and paddings*/
   --main-padding: 10px;
   --hdr-padding: 10px;
-  --ftr-padding: 20px;
+  --ftr-padding: 5px;
   --hdr-gap:  20px;
   --ftr-gap:  20px;
-  --alt-gap:  10px;
 
   /*Buttons*/
   --btn-padding: 20px;
@@ -74,7 +73,7 @@ body{
   align-items: center;
 }
 
-main,header,footer{
+main,header{
   max-width: var(--col-width);
   width: 100%;
 }
@@ -94,7 +93,7 @@ main p{
 }
 
 /*----------------------------------------*/
-header,footer,.alt{
+header,footer{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,18 +109,7 @@ header{
 footer{
   gap: var(--ftr-gap);
   padding: var(--ftr-padding);
-}
-.alt{
-  gap: var(--alt-gap);
-}
-
-.alternative{
-  color: var(--grey);
-  font-size: var(--alt-fontsize);
-}
-
-.cite{
-  font-size: var(--cite-fontsize);
+  width: 100%;
 }
 
 main{
@@ -261,4 +249,19 @@ button{
   font-size: var(--btn-fontsize);
   color: var(--col10);
   z-index: 0;
+}
+
+/* || Footer */
+footer {
+  background-color: var(--light-grey);
+  color: var(--black);
+  font-family: var(--ftr-font), sans-serif;
+  font-size: var(--ftr-fontsize);
+  font-weight: 400;
+  line-height: 1.2;
+  padding: var(--ftr-padding);
+}
+
+footer i {
+  font-size: 1.3em;
 }
