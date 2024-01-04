@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
+
 :root {
   /* Colors */
   --black: rgb(0, 0, 0);
   --white: #f1f1f1;
+  --purewhite: #ffffff;
   --grey: rgb(171, 171, 171);
   --col10: #F55555;
   --col70: #6A6FFD;
@@ -12,10 +15,14 @@
   --cite-fontsize: 16px; 
                                
   --hdr-fontsize: 36px;
+  --btn-fontsize: 28px;
+  --txt-fontsize: 22px;
+  --score-fontsize: 58px;
+  --name-fontsize: 30px;
+  --move-fontsize: 22px;
 
   /* Font family */
-  --main-font: 'Courier New';
-  --hdr-font: 'Courier New';
+  --main-font: 'Patrick Hand SC', sans-serif;
 
   /*Margins and paddings*/
   --main-padding: 10px;
@@ -36,11 +43,12 @@
 
 
 html {
-  background-color: var(--black);
-  color:  var(--grey);
+  background-color: var(--purewhite);
+  color:  var(--black);
   font-family: var(--main-font), monospace;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1em;
+  font-size: var(--txt-fontsize);
 }
 
 * { 
@@ -72,16 +80,15 @@ main,header,footer{
 }
 
 h1{
-  color: var(--white);
+  color: var(--col10);
   font-size: var(--hdr-fontsize);                                        
-  font-family: var(--hdr-font), monospace;
-  margin: var(--hdr-margins) auto;
+  margin: 0 auto;
   padding: 0 var(--hdr-padding);
   text-align: center;
 }
 
 main p{
-  margin: var(--main-margins) auto;
+  margin: 0 auto;
   padding: 0 var(--main-padding);
   text-align: center;
 }
@@ -109,7 +116,7 @@ footer{
 }
 
 .alternative{
-  color: var(--white);
+  color: var(--grey);
   font-size: var(--alt-fontsize);
 }
 
@@ -118,8 +125,6 @@ footer{
 }
 
 main{
-  border-top:  1px solid var(--grey);
-  border-bottom:  1px solid var(--grey);
   flex: 1;
   height: 100%;
   padding: var(--main-padding);
@@ -173,6 +178,36 @@ main{
   flex-direction: column;
 }
 
+#playerScore,
+#computerScore{
+  font-size: var(--score-fontsize);
+  line-height: 1;
+}  
+
+#playerChoiceInfo>p{
+  margin-bottom: 10px;
+}
+
+#roundOutcome{
+  margin-top: 25px;
+}
+
+#playerMove p,
+#computerMove p{
+  font-size: var(--move-fontsize);
+  color: var(--grey);
+}
+
+#playerName,
+#computerName{
+  margin-top: 20px;
+  font-size: var(--name-fontsize);
+}  
+
+#gameOutcome{
+  color: var(--col10);
+}
+
 .removed{
   display:none !important;
 }
@@ -198,12 +233,13 @@ button{
 
   border: var(--btn-border) solid var(--col70);
   color: var(--col70);
-  background-color: none;
+  font-size: var(--btn-fontsize);
+  background-color: var(--white);
 }
 
 .choicesBtn{
-  background-color: #F55555;
-  border: var(--btn-border) solid var(--white);
+  background-color: var(--white);
+  border: var(--btn-border) solid var(--col70);
   /*width:calc(min(200px,100%))!important;*/
   flex: 1 1 0;
   height: var(--btn-height) !important;
@@ -216,4 +252,13 @@ button{
 .choicesBtnImg{
   transform: rotate(-30deg);
   overflow: hidden;
+}
+
+.choicesBtn > p{
+  position: relative;
+  top: -12px;
+  right: 0px;
+  font-size: var(--btn-fontsize);
+  color: var(--col10);
+  z-index: 0;
 }
