@@ -25,8 +25,8 @@
   --ftr-font: 'Montserrat';
 
   /*Margins and paddings*/
-  --main-padding: 10px;
-  --hdr-padding: 10px;
+  --main-padding: 18px;
+  --hdr-padding: 30px 10px 0px;
   --ftr-padding: 5px;
   --hdr-gap:  20px;
   --ftr-gap:  20px;
@@ -82,13 +82,13 @@ h1{
   color: var(--col10);
   font-size: var(--hdr-fontsize);                                        
   margin: 0 auto;
-  padding: 0 var(--hdr-padding);
+  padding: 0;
   text-align: center;
 }
 
 main p{
   margin: 0 auto;
-  padding: 0 var(--main-padding);
+  padding: 0;
   text-align: center;
 }
 
@@ -118,7 +118,7 @@ main{
   padding: var(--main-padding);
   display:flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 #playerChoiceInfo,

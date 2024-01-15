@@ -212,7 +212,7 @@ function startNewGame(){
 	disableButton(newGameBtn);
 	removeElement(gameInfoDiv);
 	removeElement(newGameDiv);
-	hideElement(gameOutcomeDiv);
+	removeElement(gameOutcomeDiv);
 
 	playerScore=0;
 	computerScore=0;
